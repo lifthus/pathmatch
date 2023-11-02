@@ -1,10 +1,10 @@
 package pathmatch
 
-func buildMatchTree[T any](del string, ptm PathTargetMap[T]) (*segNode[T], error) {
+func buildMatchTree[T any](sep string, ptm PathTargetMap[T]) (*segNode[T], error) {
 	mt := newSegNode[T]()
 	for path, target := range ptm {
 		curmt := mt
-		targetNode := findOrCreateNodeForPath[T](curmt, path, del)
+		targetNode := findOrCreateNodeForPath[T](curmt, path, sep)
 		if err := targetNode.setTarget(target); err != nil {
 			return nil, err
 		}
@@ -12,11 +12,11 @@ func buildMatchTree[T any](del string, ptm PathTargetMap[T]) (*segNode[T], error
 	return mt, nil
 }
 
-func findOrCreateNodeForPath[T any](curmt *segNode[T], path string, del string) *segNode[T] {
+func findOrCreateNodeForPath[T any](curmt *segNode[T], path string, sep string) *segNode[T] {
 	remain := path
 	var seg string
 	for {
-		seg, remain = splitFirstSegment(del, remain)
+		seg, remain = splitFirstSegment(sep, remain)
 		if seg == "" {
 			return curmt
 		}
