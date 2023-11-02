@@ -34,4 +34,7 @@ func TestMatch(t *testing.T) {
 	if target, path, ok := matcher.Match("a/c/123"); target != 5 || path != "/123" || !ok {
 		t.Errorf("<a/c/123> should be matched to <5, /123> but got <%d, %s> with <%t>", target, path, ok)
 	}
+	if target, path, ok := matcher.Match("a/a"); target != 2 || path != "/" || !ok {
+		t.Errorf("<a/a> should be matched to <2, /> but got <%d, %s> with <%t>", target, path, ok)
+	}
 }
