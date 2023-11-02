@@ -2,6 +2,7 @@ package pathmatch
 
 import (
 	"fmt"
+	"strings"
 )
 
 type PathTargetMap[T any] map[string]T
@@ -30,11 +31,20 @@ type Matcher[T any] struct {
 	rootSeg *segNode[T]
 }
 
-func (mch *Matcher[T]) Match(path string) (target T, ok bool) {
-	// remain := path
-	// curseg
+func (mch *Matcher[T]) Match(path string) (target T, targetPath string, ok bool) {
+	full := path
+	cursn := mch.rootSeg
 	for {
-		//seg, remain := splitFirstSegment(mch.sep, remain)
+		seg, remain := splitFirstSegment(mch.sep, full)
+		nextsn, ok := cursn.nextSegMap[seg]
+		if !ok {
+			if !strings.HasPrefix(full, mch.sep) {
+				full = mch.sep + full
+			}
+			return cursn.target, full, cursn.ok
+		}
+		cursn = nextsn
+		full = remain
 	}
 }
 
