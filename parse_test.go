@@ -35,3 +35,20 @@ func TestSplitFirstSegmentWithLongerSep(t *testing.T) {
 		}
 	}
 }
+
+func TestTrimSep(t *testing.T) {
+	QnA := map[string]string{
+		"!@#a!@#b!@#c":       "a!@#b!@#c",
+		"a!@#b!@#c":          "a!@#b!@#c",
+		"a!@#b!@#c!@#":       "a!@#b!@#c",
+		"!@#a!@#b!@#c!@#!@#": "a!@#b!@#c",
+		"a!@#b!@#c!@#!@#!@#": "a!@#b!@#c",
+		"!@#!@#a!@#b!@#!@#":  "a!@#b",
+	}
+
+	for q, a := range QnA {
+		if str := trimSep(q, "!@#"); str != a {
+			t.Errorf("%s is expected to be trimmed into %s, but got %s", q, a, str)
+		}
+	}
+}
