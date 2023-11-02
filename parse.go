@@ -3,7 +3,7 @@ package pathmatch
 import "strings"
 
 func splitFirstSegment(sep, path string) (seg string, remain string) {
-	path = strings.Trim(path, sep)
+	path = trimSep(path, sep)
 	nextDelIdx := strings.Index(path, sep)
 	if nextDelIdx == -1 {
 		return path, ""
@@ -14,6 +14,11 @@ func splitFirstSegment(sep, path string) (seg string, remain string) {
 }
 
 func trimSep(str, sep string) string {
-	str = strings.TrimPrefix(str, sep)
-	return strings.TrimSuffix(str, sep)
+	for strings.HasPrefix(str, sep) {
+		str = strings.TrimPrefix(str, sep)
+	}
+	for strings.HasSuffix(str, sep) {
+		str = strings.TrimSuffix(str, sep)
+	}
+	return str
 }

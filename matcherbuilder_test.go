@@ -3,6 +3,7 @@ package pathmatch
 import "testing"
 
 func TestBuildMatchTree(t *testing.T) {
+	// IT SHOULD USE OWN METHOD CAUSE IT CAUSES NIL POINTER ERROR EVERYTIME IT FAILS.
 	PathIntMap := map[string]int{
 		"/":      1,
 		"a/a":    2,
