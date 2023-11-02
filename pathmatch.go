@@ -38,6 +38,12 @@ func (mch *Matcher[T]) Match(path string) (target T, targetPath string, ok bool)
 		seg, remain := splitFirstSegment(mch.sep, full)
 		nextsn, ok := cursn.nextSegMap[seg]
 		if !ok {
+			// going back to root if there is no target.
+			// but root may have no target as well.
+			if !cursn.ok {
+				cursn = mch.rootSeg
+				full = path
+			}
 			if !strings.HasPrefix(full, mch.sep) {
 				full = mch.sep + full
 			}

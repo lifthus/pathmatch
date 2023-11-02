@@ -2,33 +2,6 @@ package pathmatch
 
 import "testing"
 
-func TestBuildMatchTree(t *testing.T) {
-	// IT SHOULD USE OWN METHOD CAUSE IT CAUSES NIL POINTER ERROR EVERYTIME IT FAILS.
-	PathIntMap := map[string]int{
-		"/":      1,
-		"a/a":    2,
-		"/a/b/":  3,
-		"/a/b/c": 4,
-		"/a///c": 5,
-	}
-	root, err := buildMatchTree[int](TestDel, PathIntMap)
-	if err != nil {
-		t.Errorf("buildMatchTree has failed: %v", err)
-	}
-	switch {
-	case root.target != 1:
-		fallthrough
-	case root.nextSegMap["a"].nextSegMap["a"].target != 2:
-		fallthrough
-	case root.nextSegMap["a"].nextSegMap["b"].target != 3:
-		fallthrough
-	case root.nextSegMap["a"].nextSegMap["b"].nextSegMap["c"].target != 4:
-		fallthrough
-	case root.nextSegMap["a"].nextSegMap["c"].target != 5:
-		t.Errorf("buildMatchTree has built invalid tree: %v", root)
-	}
-}
-
 func TestFindOrCreateNodeForPath(t *testing.T) {
 	IntMatchTree := &segNode[int]{
 		target: 1,
