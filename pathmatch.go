@@ -32,7 +32,7 @@ func buildMatchTree[T any](del string, ptm PathTargetMap[T]) (*matchTree[T], err
 	mt := newMatchTree[T]()
 	for path, target := range ptm {
 		curmt := mt
-		targetNode := searchOrGenerateNodeForPath[T](curmt, path, del)
+		targetNode := findOrCreateNodeForPath[T](curmt, path, del)
 		if err := targetNode.SetTarget(target); err != nil {
 			return nil, err
 		}
@@ -40,7 +40,7 @@ func buildMatchTree[T any](del string, ptm PathTargetMap[T]) (*matchTree[T], err
 	return mt, nil
 }
 
-func searchOrGenerateNodeForPath[T any](curmt *matchTree[T], path string, del string) *matchTree[T] {
+func findOrCreateNodeForPath[T any](curmt *matchTree[T], path string, del string) *matchTree[T] {
 	remain := path
 	var seg string
 	for {
