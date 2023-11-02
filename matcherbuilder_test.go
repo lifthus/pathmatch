@@ -3,16 +3,16 @@ package pathmatch
 import "testing"
 
 func TestFindOrCreateNodeForPath(t *testing.T) {
-	IntMatchTree := &matchTree[int]{
+	IntMatchTree := &segNode[int]{
 		target: 1,
 		ok:     true,
-		next: matchMap[int]{
-			"a": &matchTree[int]{
-				next: matchMap[int]{
-					"b": &matchTree[int]{
-						target: 3,
-						ok:     true,
-						next:   matchMap[int]{},
+		nextSegMap: map[string]*segNode[int]{
+			"a": {
+				nextSegMap: map[string]*segNode[int]{
+					"b": {
+						target:     3,
+						ok:         true,
+						nextSegMap: map[string]*segNode[int]{},
 					},
 				},
 			},

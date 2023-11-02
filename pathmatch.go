@@ -20,29 +20,29 @@ func NewMatcher[T any](delimiter string, pathTargetMap PathTargetMap[T]) (*Match
 		return nil, err
 	}
 	return &Matcher[T]{
-		del:   delimiter,
-		match: mm,
+		del:     delimiter,
+		rootSeg: mm,
 	}, nil
 }
 
 type Matcher[T any] struct {
-	del   string
-	match *matchTree[T]
+	del     string
+	rootSeg *segNode[T]
 }
 
-func newMatchTree[T any]() *matchTree[T] {
-	return &matchTree[T]{
-		next: matchMap[T]{},
+func newSegNode[T any]() *segNode[T] {
+	return &segNode[T]{
+		nextSegMap: map[string]*segNode[T]{},
 	}
 }
 
-type matchTree[T any] struct {
-	target T
-	ok     bool
-	next   matchMap[T]
+type segNode[T any] struct {
+	target     T
+	ok         bool
+	nextSegMap map[string]*segNode[T]
 }
 
-func (mtr *matchTree[T]) SetTarget(target T) error {
+func (mtr *segNode[T]) setTarget(target T) error {
 	if mtr.ok {
 		return fmt.Errorf("target has been already set")
 	}
@@ -50,5 +50,3 @@ func (mtr *matchTree[T]) SetTarget(target T) error {
 	mtr.target = target
 	return nil
 }
-
-type matchMap[T any] map[string]*matchTree[T]
