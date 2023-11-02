@@ -2,17 +2,14 @@ package pathmatch
 
 import "testing"
 
-var (
-	PathIntMap = map[string]int{
+func TestBuildMatchTree(t *testing.T) {
+	PathIntMap := map[string]int{
 		"/":      1,
 		"a/a":    2,
 		"/a/b/":  3,
 		"/a/b/c": 4,
 		"/a///c": 5,
 	}
-)
-
-func TestBuildMatchTree(t *testing.T) {
 	root, err := buildMatchTree[int](TestDel, PathIntMap)
 	if err != nil {
 		t.Errorf("buildMatchTree has failed: %v", err)
