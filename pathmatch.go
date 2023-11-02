@@ -30,6 +30,14 @@ type Matcher[T any] struct {
 	rootSeg *segNode[T]
 }
 
+func (mch *Matcher[T]) Match(path string) (target T, ok bool) {
+	// remain := path
+	// curseg
+	for {
+		//seg, remain := splitFirstSegment(mch.sep, remain)
+	}
+}
+
 func newSegNode[T any]() *segNode[T] {
 	return &segNode[T]{
 		nextSegMap: map[string]*segNode[T]{},
@@ -42,11 +50,11 @@ type segNode[T any] struct {
 	nextSegMap map[string]*segNode[T]
 }
 
-func (mtr *segNode[T]) setTarget(target T) error {
-	if mtr.ok {
+func (sn *segNode[T]) setTarget(target T) error {
+	if sn.ok {
 		return fmt.Errorf("target has been already set")
 	}
-	mtr.ok = true
-	mtr.target = target
+	sn.ok = true
+	sn.target = target
 	return nil
 }
