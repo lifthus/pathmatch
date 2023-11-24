@@ -27,7 +27,14 @@ a Go generic module that matches proper target(URL(s) etc..) for the basepath.
     target, path, ok := matcher.Match("a") // 1, "/a", true
     // root("/") target will be returned, since no basepath is matched.
     // if root path isn't defined, "ok" will be false.
+
     target, path, ok = matcher.Match("/a/c/def") // 5, "/def", true
+
+    target, path, ok = matcher.Match("a/a///") // 2, "///", true
+    // suffix separators without additional segment will be reservered if present.
+
+    target, path, ok = matcher.Match("a/a") // 2, "", true
+    // if remaining path is empty, it will be preserved as well, returning empty path without any separator.
     ...
 ```
 
