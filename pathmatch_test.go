@@ -37,6 +37,9 @@ func TestMatch(t *testing.T) {
 	if target, path, ok := matcher.Match("a/a"); target != 2 || path != "" || !ok {
 		t.Errorf("<a/a> should be matched to <2, > but got <%d, %s> with <%t>", target, path, ok)
 	}
+	if target, path, ok := matcher.Match("a/c///"); target != 5 || path != "///" || !ok {
+		t.Errorf("<a/c///> should be matched to <5, ///> but got <%d, %s> with <%t>", target, path, ok)
+	}
 }
 
 func TestMatchWithSuffixSlash(t *testing.T) {
