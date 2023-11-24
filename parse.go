@@ -3,22 +3,20 @@ package pathmatch
 import "strings"
 
 func splitFirstSegment(sep, path string) (seg string, remain string) {
-	path = trimSep(path, sep)
-	nextDelIdx := strings.Index(path, sep)
-	if nextDelIdx == -1 {
-		return path, ""
+	seg = trimSepPrefix(path, sep)
+	if seg == "" {
+		return "", path
 	}
-	seg = path[:nextDelIdx]
-	remain = path[nextDelIdx:]
-	return seg, remain
+	nextDelIdx := strings.Index(seg, sep)
+	if nextDelIdx == -1 {
+		return seg, ""
+	}
+	return seg[:nextDelIdx], seg[nextDelIdx:]
 }
 
-func trimSep(str, sep string) string {
+func trimSepPrefix(str, sep string) string {
 	for strings.HasPrefix(str, sep) {
 		str = strings.TrimPrefix(str, sep)
-	}
-	for strings.HasSuffix(str, sep) {
-		str = strings.TrimSuffix(str, sep)
 	}
 	return str
 }

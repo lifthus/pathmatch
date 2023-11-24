@@ -44,7 +44,7 @@ func (mch *Matcher[T]) Match(path string) (target T, targetPath string, ok bool)
 				cursn = mch.rootSeg
 				full = path
 			}
-			if !strings.HasPrefix(full, mch.sep) {
+			if !strings.HasPrefix(full, mch.sep) && full != "" {
 				full = mch.sep + full
 			}
 			return cursn.target, full, cursn.ok
